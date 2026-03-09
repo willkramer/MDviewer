@@ -3,29 +3,48 @@
   const payloadEl = document.getElementById("viewer-data");
   const decoder = new TextDecoder();
 
+  function getMode() {
+    return localStorage.getItem("mdv-theme") || "auto";
+  }
+
   function getEffectiveTheme() {
-    const explicit = document.documentElement.getAttribute("data-theme");
-    if (explicit) return explicit;
+    const mode = getMode();
+    if (mode === "dark" || mode === "light") return mode;
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   }
 
   function updateToggleButton() {
     const btn = document.querySelector(".theme-toggle");
     if (!btn) return;
-    const isDark = getEffectiveTheme() === "dark";
-    btn.textContent = isDark ? "\u2600" : "\u263E";
-    btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+    const mode = getMode();
+    if (mode === "auto") {
+      btn.textContent = "\u25D1";
+      btn.setAttribute("aria-label", "Theme: auto (system) \u2014 click to switch to light");
+    } else if (mode === "light") {
+      btn.textContent = "\u2600";
+      btn.setAttribute("aria-label", "Theme: light \u2014 click to switch to dark");
+    } else {
+      btn.textContent = "\u263E";
+      btn.setAttribute("aria-label", "Theme: dark \u2014 click to switch to auto");
+    }
   }
 
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("mdv-theme", theme);
+  function applyMode(mode) {
+    if (mode === "auto") {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.removeItem("mdv-theme");
+    } else {
+      document.documentElement.setAttribute("data-theme", mode);
+      localStorage.setItem("mdv-theme", mode);
+    }
     updateToggleButton();
   }
 
   function toggleTheme() {
-    var newTheme = getEffectiveTheme() === "dark" ? "light" : "dark";
-    applyTheme(newTheme);
+    const mode = getMode();
+    if (mode === "auto") applyMode("light");
+    else if (mode === "light") applyMode("dark");
+    else applyMode("auto");
   }
 
   window.toggleTheme = toggleTheme;
@@ -35,6 +54,10 @@
     if (saved === "dark" || saved === "light") {
       document.documentElement.setAttribute("data-theme", saved);
     }
+
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+      if (getMode() === "auto") updateToggleButton();
+    });
   }
 
   function createToggleButton() {

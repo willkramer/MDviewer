@@ -21,46 +21,46 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111827;
-    --page-text: #d8e2f0;
-    --muted-text: #9aa5b4;
-    --accent: #60a5fa;
-    --border: #2e3a4a;
-    --inline-code-bg: #1e293b;
-    --inline-code-text: #f0abfc;
-    --code-block-bg: #0f1724;
-    --code-block-text: #d8e2f0;
-    --heading-text: #e2e8f0;
-    --heading-border: #1e293b;
-    --blockquote-bg: #1a2332;
-    --blockquote-text: #b0bec5;
-    --th-bg: #1a2332;
-    --th-text: #d8e2f0;
-    --even-row-bg: #151f2e;
-    --hr-color: #1e293b;
-    --error-text: #fb7185;
+    --bg: #1c1c1e;
+    --page-text: #e5e5e7;
+    --muted-text: #8e8e93;
+    --accent: #5aadff;
+    --border: #38383a;
+    --inline-code-bg: #2c2c2e;
+    --inline-code-text: #e8a0f0;
+    --code-block-bg: #111111;
+    --code-block-text: #d4d4d8;
+    --heading-text: #f2f2f4;
+    --heading-border: #38383a;
+    --blockquote-bg: #252527;
+    --blockquote-text: #a1a1a6;
+    --th-bg: #2c2c2e;
+    --th-text: #d4d4d8;
+    --even-row-bg: #222224;
+    --hr-color: #38383a;
+    --error-text: #ff6961;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #111827;
-  --page-text: #d8e2f0;
-  --muted-text: #9aa5b4;
-  --accent: #60a5fa;
-  --border: #2e3a4a;
-  --inline-code-bg: #1e293b;
-  --inline-code-text: #f0abfc;
-  --code-block-bg: #0f1724;
-  --code-block-text: #d8e2f0;
-  --heading-text: #e2e8f0;
-  --heading-border: #1e293b;
-  --blockquote-bg: #1a2332;
-  --blockquote-text: #b0bec5;
-  --th-bg: #1a2332;
-  --th-text: #d8e2f0;
-  --even-row-bg: #151f2e;
-  --hr-color: #1e293b;
-  --error-text: #fb7185;
+  --bg: #1c1c1e;
+  --page-text: #e5e5e7;
+  --muted-text: #8e8e93;
+  --accent: #5aadff;
+  --border: #38383a;
+  --inline-code-bg: #2c2c2e;
+  --inline-code-text: #e8a0f0;
+  --code-block-bg: #111111;
+  --code-block-text: #d4d4d8;
+  --heading-text: #f2f2f4;
+  --heading-border: #38383a;
+  --blockquote-bg: #252527;
+  --blockquote-text: #a1a1a6;
+  --th-bg: #2c2c2e;
+  --th-text: #d4d4d8;
+  --even-row-bg: #222224;
+  --hr-color: #38383a;
+  --error-text: #ff6961;
 }
 
 * {
