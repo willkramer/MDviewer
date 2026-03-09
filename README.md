@@ -18,10 +18,9 @@
 
 ---
 
-<!-- TODO: Replace with actual screenshot -->
-<!-- <p align="center">
-  <img src="./assets/demo.png" alt="MDviewer showing a rendered Markdown document" width="720">
-</p> -->
+<p align="center">
+  <img src="./assets/demo.gif" alt="MDviewer showing a rendered Markdown document" width="720">
+</p>
 
 ## Why MDviewer
 
@@ -80,14 +79,9 @@ The built app is at `dist/Markdown Viewer.app`. To install to `/Applications` an
 
 ## Screenshots
 
-<!-- TODO: Add actual screenshots -->
-<!--
-| Document view | PDF export | Code blocks |
+| Document view | Code blocks | Checklists |
 |---|---|---|
-| ![doc](./assets/screenshot-doc.png) | ![pdf](./assets/screenshot-pdf.png) | ![code](./assets/screenshot-code.png) |
--->
-
-*Screenshots coming soon — see [asset checklist](#asset-production-checklist) below.*
+| ![doc](./assets/screenshot-doc.png) | ![code](./assets/screenshot-code.png) | ![checklist](./assets/screenshot-checklist.png) |
 
 ## How It Compares
 
