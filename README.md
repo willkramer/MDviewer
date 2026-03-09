@@ -52,7 +52,11 @@ MDviewer is different:
 
 1. Grab `MDviewer.app.zip` from [Releases](https://github.com/JackYoung27/mdviewer/releases/latest)
 2. Unzip, drag to `/Applications`
-3. First launch: right-click → **Open** (required once for unsigned apps)
+3. Clear the quarantine flag (macOS blocks unsigned downloaded apps):
+   ```bash
+   xattr -cr /Applications/Markdown\ Viewer.app
+   ```
+4. Double-click to open as normal
 
 ### Build from source
 
