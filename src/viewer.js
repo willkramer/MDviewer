@@ -3,6 +3,48 @@
   const payloadEl = document.getElementById("viewer-data");
   const decoder = new TextDecoder();
 
+  function getEffectiveTheme() {
+    const explicit = document.documentElement.getAttribute("data-theme");
+    if (explicit) return explicit;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function updateToggleButton() {
+    const btn = document.querySelector(".theme-toggle");
+    if (!btn) return;
+    const isDark = getEffectiveTheme() === "dark";
+    btn.textContent = isDark ? "\u2600" : "\u263E";
+    btn.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("mdv-theme", theme);
+    updateToggleButton();
+  }
+
+  function toggleTheme() {
+    var newTheme = getEffectiveTheme() === "dark" ? "light" : "dark";
+    applyTheme(newTheme);
+  }
+
+  window.toggleTheme = toggleTheme;
+
+  function initTheme() {
+    const saved = localStorage.getItem("mdv-theme");
+    if (saved === "dark" || saved === "light") {
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+  }
+
+  function createToggleButton() {
+    const btn = document.createElement("button");
+    btn.className = "theme-toggle";
+    btn.addEventListener("click", toggleTheme);
+    document.body.appendChild(btn);
+    updateToggleButton();
+  }
+
   function setError(message) {
     contentEl.innerHTML = "";
     const errorEl = document.createElement("p");
@@ -66,13 +108,17 @@
     }
   }
 
+  initTheme();
+
   if (!payloadEl) {
     setError("Preview data is missing.");
+    createToggleButton();
     return;
   }
 
   if (!window.marked || !window.DOMPurify) {
     setError("Renderer assets failed to load.");
+    createToggleButton();
     return;
   }
 
@@ -90,6 +136,7 @@
   } catch (error) {
     console.error(error);
     setError("Preview data could not be decoded.");
+    createToggleButton();
     return;
   }
 
@@ -122,4 +169,6 @@
     console.error(error);
     setError("Markdown preview failed to render.");
   }
+
+  createToggleButton();
 })();

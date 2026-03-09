@@ -525,6 +525,17 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     [fileMenu addItem:closeItem];
 
     fileMenuItem.submenu = fileMenu;
+
+    NSMenuItem *viewMenuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+    [mainMenu addItem:viewMenuItem];
+
+    NSMenu *viewMenu = [[NSMenu alloc] initWithTitle:@"View"];
+    [viewMenu addItem:[self menuItemWithTitle:@"Toggle Dark Mode"
+                                       action:@selector(toggleDarkMode:)
+                                 keyEquivalent:@"d"
+                             modifierMask:(NSEventModifierFlagCommand | NSEventModifierFlagShift)]];
+    viewMenuItem.submenu = viewMenu;
+
     [NSApp setMainMenu:mainMenu];
 }
 
@@ -704,6 +715,13 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     [[self currentPreviewWindowController] revealSourceFile:sender];
 }
 
+- (void)toggleDarkMode:(id)sender {
+    MDVPreviewWindowController *controller = [self currentPreviewWindowController];
+    if (controller && controller.isPreviewReady) {
+        [controller.webView evaluateJavaScript:@"toggleTheme()" completionHandler:nil];
+    }
+}
+
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
     SEL action = item.action;
 
@@ -720,7 +738,8 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
         return YES;
     }
 
-    if (action == @selector(printDocument:) || action == @selector(exportPDF:) || action == @selector(openPDFInDefaultApp:)) {
+    if (action == @selector(toggleDarkMode:) ||
+        action == @selector(printDocument:) || action == @selector(exportPDF:) || action == @selector(openPDFInDefaultApp:)) {
         return controller.isPreviewReady;
     }
 
