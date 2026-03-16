@@ -526,6 +526,37 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 
     fileMenuItem.submenu = fileMenu;
 
+    NSMenuItem *editMenuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+    [mainMenu addItem:editMenuItem];
+
+    NSMenu *editMenu = [[NSMenu alloc] initWithTitle:@"Edit"];
+    [editMenu addItem:[self standardMenuItemWithTitle:@"Undo"
+                                               action:@selector(undo:)
+                                         keyEquivalent:@"z"
+                                         modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[self standardMenuItemWithTitle:@"Redo"
+                                               action:@selector(redo:)
+                                         keyEquivalent:@"Z"
+                                         modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[NSMenuItem separatorItem]];
+    [editMenu addItem:[self standardMenuItemWithTitle:@"Cut"
+                                               action:@selector(cut:)
+                                         keyEquivalent:@"x"
+                                         modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[self standardMenuItemWithTitle:@"Copy"
+                                               action:@selector(copy:)
+                                         keyEquivalent:@"c"
+                                         modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[self standardMenuItemWithTitle:@"Paste"
+                                               action:@selector(paste:)
+                                         keyEquivalent:@"v"
+                                         modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[self standardMenuItemWithTitle:@"Select All"
+                                               action:@selector(selectAll:)
+                                         keyEquivalent:@"a"
+                                         modifierMask:NSEventModifierFlagCommand]];
+    editMenuItem.submenu = editMenu;
+
     NSMenuItem *viewMenuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
     [mainMenu addItem:viewMenuItem];
 
@@ -545,6 +576,16 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
                      modifierMask:(NSEventModifierFlags)modifierMask {
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:action keyEquivalent:keyEquivalent];
     item.target = self;
+    item.keyEquivalentModifierMask = modifierMask;
+    return item;
+}
+
+- (NSMenuItem *)standardMenuItemWithTitle:(NSString *)title
+                                   action:(SEL)action
+                             keyEquivalent:(NSString *)keyEquivalent
+                             modifierMask:(NSEventModifierFlags)modifierMask {
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:action keyEquivalent:keyEquivalent];
+    item.target = nil;
     item.keyEquivalentModifierMask = modifierMask;
     return item;
 }
