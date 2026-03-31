@@ -38,6 +38,7 @@ MDviewer is different:
 - **Native macOS** — Cocoa + WKWebView, launches instantly, under 1 MB
 - **Print-ready typography** — serif body, clean headings, proper spacing
 - **PDF export** — `Cmd+Shift+E` to save, `Cmd+P` to print
+- **In-document search** — `Cmd+F` finds text in the rendered Markdown, with next/previous match navigation
 - **Live reload** — re-renders automatically when the file changes on disk
 - **GitHub Flavored Markdown** — tables, task lists, fenced code blocks
 - **Dark mode** — follows your macOS appearance setting
@@ -50,7 +51,7 @@ MDviewer is different:
 
 ### Download
 
-1. Grab `MDviewer.app.zip` from [Releases](https://github.com/JackYoung27/mdviewer/releases/latest)
+1. Grab `Markdown-Viewer-macOS.zip` from [Releases](https://github.com/JackYoung27/mdviewer/releases/latest)
 2. Unzip, drag to `/Applications`
 3. On first launch, macOS will block the app because it's unsigned. To open it:
    - **Right-click** (or Control-click) the app → click **Open** → click **Open** again in the dialog
@@ -73,6 +74,9 @@ Requires Xcode Command Line Tools (`xcode-select --install`).
 | Action | Shortcut |
 |---|---|
 | Open file | `Cmd+O` |
+| Find in document | `Cmd+F` |
+| Next match | `Cmd+G` |
+| Previous match | `Cmd+Shift+G` |
 | Reload | `Cmd+R` |
 | Print | `Cmd+P` |
 | Export PDF | `Cmd+Shift+E` |

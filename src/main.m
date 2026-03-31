@@ -551,6 +551,20 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
                                                action:@selector(paste:)
                                          keyEquivalent:@"v"
                                          modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[NSMenuItem separatorItem]];
+    [editMenu addItem:[self menuItemWithTitle:@"Find..."
+                                       action:@selector(openFindPanel:)
+                                 keyEquivalent:@"f"
+                             modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[self menuItemWithTitle:@"Find Next"
+                                       action:@selector(findNextMatch:)
+                                 keyEquivalent:@"g"
+                             modifierMask:NSEventModifierFlagCommand]];
+    [editMenu addItem:[self menuItemWithTitle:@"Find Previous"
+                                       action:@selector(findPreviousMatch:)
+                                 keyEquivalent:@"G"
+                             modifierMask:(NSEventModifierFlagCommand | NSEventModifierFlagShift)]];
+    [editMenu addItem:[NSMenuItem separatorItem]];
     [editMenu addItem:[self standardMenuItemWithTitle:@"Select All"
                                                action:@selector(selectAll:)
                                          keyEquivalent:@"a"
@@ -763,6 +777,27 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     }
 }
 
+- (void)runPreviewJavaScript:(NSString *)script {
+    MDVPreviewWindowController *controller = [self currentPreviewWindowController];
+    if (!controller || !controller.isPreviewReady) {
+        return;
+    }
+
+    [controller.webView evaluateJavaScript:script completionHandler:nil];
+}
+
+- (void)openFindPanel:(id)sender {
+    [self runPreviewJavaScript:@"if (typeof mdvOpenFindBar === 'function') { mdvOpenFindBar(); }"];
+}
+
+- (void)findNextMatch:(id)sender {
+    [self runPreviewJavaScript:@"if (typeof mdvFindNextMatch === 'function') { mdvFindNextMatch(); }"];
+}
+
+- (void)findPreviousMatch:(id)sender {
+    [self runPreviewJavaScript:@"if (typeof mdvFindPreviousMatch === 'function') { mdvFindPreviousMatch(); }"];
+}
+
 - (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
     SEL action = item.action;
 
@@ -780,6 +815,9 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     }
 
     if (action == @selector(toggleDarkMode:) ||
+        action == @selector(openFindPanel:) ||
+        action == @selector(findNextMatch:) ||
+        action == @selector(findPreviousMatch:) ||
         action == @selector(printDocument:) || action == @selector(exportPDF:) || action == @selector(openPDFInDefaultApp:)) {
         return controller.isPreviewReady;
     }
