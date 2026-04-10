@@ -384,10 +384,20 @@ body:hover .theme-toggle {
   }
 }
 
+.document .heading-group {
+  display: contents;
+  break-inside: avoid;
+}
+
 @media print {
   .document {
     min-height: auto;
     padding: 0;
+    font-size: 11pt;
+  }
+
+  .document .heading-group {
+    display: block;
   }
 
   .theme-toggle,

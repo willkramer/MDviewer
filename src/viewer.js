@@ -94,8 +94,22 @@
     searchState.countEl.textContent = `${searchState.activeIndex + 1} of ${searchState.matches.length}`;
   }
 
+  function wrapHeadingsForPrint(root) {
+    const headings = root.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    for (const heading of headings) {
+      const sibling = heading.nextElementSibling;
+      if (!sibling || /^H[1-6]$/.test(sibling.tagName)) continue;
+      const wrapper = document.createElement("div");
+      wrapper.className = "heading-group";
+      heading.parentNode.insertBefore(wrapper, heading);
+      wrapper.appendChild(heading);
+      wrapper.appendChild(sibling);
+    }
+  }
+
   function applyRenderedContent() {
     contentEl.innerHTML = renderedContentHtml || "<p></p>";
+    wrapHeadingsForPrint(contentEl);
     disableTaskCheckboxes(contentEl);
     finalizeLinks(contentEl);
     finalizeImages(contentEl);
