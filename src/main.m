@@ -694,7 +694,7 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
-    return YES;
+    return NO;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -775,6 +775,9 @@ decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     controller.closeHandler = ^{
         if (weakController) {
             [weakSelf.windowControllers removeObject:weakController];
+        }
+        if (weakSelf.windowControllers.count == 0) {
+            [NSApp terminate:nil];
         }
     };
 
